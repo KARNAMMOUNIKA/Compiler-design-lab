@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+void FIRST(char c)
+{
+    switch(c)
+    {
+        case 'S':
+            printf("{ a, b }");
+            break;
+
+        case 'A':
+            printf("{ e }");
+            break;
+
+        case 'B':
+            printf("{ e }");
+            break;
+    }
+}
+
+int main()
+{
+    printf("Grammar:\n");
+    printf("S -> AaAb | BbBa\n");
+    printf("A -> e\n");
+    printf("B -> e\n\n");
+
+    printf("FIRST(S) = ");
+    FIRST('S');
+
+    printf("\nFIRST(A) = ");
+    FIRST('A');
+
+    printf("\nFIRST(B) = ");
+    FIRST('B');
+
+    return 0;
+}
