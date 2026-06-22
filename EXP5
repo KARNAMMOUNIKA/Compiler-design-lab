@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main()
+{
+    char ch;
+    int spaces=0, lines=0;
+
+    printf("Enter text (Ctrl+Z to stop):\n");
+
+    while((ch=getchar())!=EOF)
+    {
+        if(ch==' ')
+            spaces++;
+
+        if(ch=='\n')
+            lines++;
+    }
+
+    printf("White Spaces = %d\n", spaces);
+    printf("New Lines = %d\n", lines);
+
+    return 0;
+}
