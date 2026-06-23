@@ -1,0 +1,17 @@
+#include<stdio.h>
+
+int main()
+{
+    char a,b,c,d;
+
+    printf("Enter expression (a=b+c): ");
+    scanf("%c=%c%c%c",&a,&b,&c,&d);
+
+    printf("\nGenerated Target Code:\n");
+
+    printf("MOV %c,R0\n",b);
+    printf("ADD %c,R0\n",d);
+    printf("MOV R0,%c\n",a);
+
+    return 0;
+}
