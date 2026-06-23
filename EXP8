@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char productions[10][20];
+char follow[20];
+int n, m = 0;
+
+void addToFollow(char c)
+{
+    int i;
+    for(i = 0; i < m; i++)
+    {
+        if(follow[i] == c)
+            return;
+    }
+    follow[m++] = c;
+}
+
+void first(char c);
+
+void findFollow(char c)
+{
+    int i, j;
+
+    if(c == productions[0][0])
+        addToFollow('$');
+
+    for(i = 0; i < n; i++)
+    {
+        int len = strlen(productions[i]);
+
+        for(j = 2; j < len; j++)
+        {
+            if(productions[i][j] == c)
+            {
+                if(j + 1 < len)
+                {
+                    char next = productions[i][j + 1];
+
+                    if(!isupper(next))
+                    {
+                        addToFollow(next);
+                    }
+                    else
+                    {
+                        first(next);
+                    }
+                }
+                else
+                {
+                    if(productions[i][0] != c)
+                        findFollow(productions[i][0]);
+                }
+            }
+        }
+    }
+}
+
+void first(char c)
+{
+    int i;
+
+    for(i = 0; i < n; i++)
+    {
+        if(productions[i][0] == c)
+        {
+            char ch = productions[i][2];
+
+            if(!isupper(ch))
+            {
+                addToFollow(ch);
+            }
+        }
+    }
+}
+
+int main()
+{
+    int i;
+    char nonTerminal;
+
+    printf("Enter number of productions: ");
+    scanf("%d", &n);
+
+    printf("Enter productions (Example: S=AaAb)\n");
+
+    for(i = 0; i < n; i++)
+        scanf("%s", productions[i]);
+
+    printf("Enter non-terminal to find FOLLOW: ");
+    scanf(" %c", &nonTerminal);
+
+    findFollow(nonTerminal);
+
+    printf("FOLLOW(%c) = { ", nonTerminal);
+
+    for(i = 0; i < m; i++)
+        printf("%c ", follow[i]);
+
+    printf("}\n");
+
+    return 0;
+}
