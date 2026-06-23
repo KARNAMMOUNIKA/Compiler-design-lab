@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char prod[100];
+    char lhs;
+
+    printf("Enter production (Example: S->iEtS|iEtSeS|a): ");
+    scanf("%s", prod);
+
+    lhs = prod[0];
+
+    char *rhs = strstr(prod, "->") + 2;
+
+    char p1[30], p2[30], p3[30];
+
+    sscanf(rhs, "%[^|]|%[^|]|%s", p1, p2, p3);
+
+    int i = 0;
+
+    while(p1[i] == p2[i] && p1[i] != '\0')
+        i++;
+
+    if(i > 0)
+    {
+        char common[30];
+
+        strncpy(common, p1, i);
+        common[i] = '\0';
+
+        printf("\nGrammar after Left Factoring:\n");
+
+        printf("%c->%s%c'|%s\n",
+               lhs,
+               common,
+               lhs,
+               p3);
+
+        printf("%c'->%s|%s\n",
+               lhs,
+               p1 + i,
+               p2 + i);
+    }
+    else
+    {
+        printf("No Left Factoring Needed.\n");
+    }
+
+    return 0;
+}
